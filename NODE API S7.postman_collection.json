@@ -1,0 +1,157 @@
+{
+  "info": {
+    "_postman_id": "cd1cb1bd-17d9-4312-a30a-68cb5d2878cb",
+    "name": "NODE API S7",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26678393",
+    "_collection_link": "https://lunar-shadow-598419.postman.co/workspace/Los-Danis~bb2fabbe-669e-40aa-85ab-0d5b9d85e36d/collection/26678393-cd1cb1bd-17d9-4312-a30a-68cb5d2878cb?action=share&creator=26678393&source=collection_link"
+  },
+  "item": [
+    {
+      "name": "TECH COMPANIES",
+      "item": [
+        {
+          "name": "Get Tech Companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tech",
+              "host": ["{{base_url}}"],
+              "path": ["tech"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tech Company by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tech/1",
+              "host": ["{{base_url}}"],
+              "path": ["tech", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tech Company",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Prueba name\",\r\n  \"foundedYear\": 1900,\r\n  \"employeesNumber\" : 100,\r\n  \"headquarters\" : \"Prueba\",\r\n  \"ceo\" : \"Prueba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tech",
+              "host": ["{{base_url}}"],
+              "path": ["tech"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Tech Company by Id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Update 3 name\",\r\n  \"foundedYear\": 1900,\r\n  \"employeesNumber\" : 100,\r\n  \"headquarters\" : 101,\r\n  \"ceo\" : \"Prueba\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tech/21",
+              "host": ["{{base_url}}"],
+              "path": ["tech", "21"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Company",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Prueba name\",\r\n  \"releasedYear\": 1900,\r\n  \"githutRank\" : 100,\r\n  \"pyplRank\" : 101,\r\n  \"tiobeRank\" : 102\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tech/21",
+              "host": ["{{base_url}}"],
+              "path": ["tech", "21"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}",
+          "host": ["{{base_url}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}
