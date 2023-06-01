@@ -41,7 +41,7 @@ techCompaniesRouter.get("/:id", async (req: Request, res: Response, next: NextFu
       const response = { data: raws }
       res.json(response)
     } else {
-      res.status(404).json({ error: "Companie not found" })
+      res.status(404).json({ error: "Company not found" })
     }
   } catch (error) {
     next(error);
@@ -61,7 +61,7 @@ techCompaniesRouter.post("/", async (req: Request, res: Response, next: NextFunc
     if (result) {
       return res.status(201).json({})
     } else {
-      res.status(500).json({ error: "Companie not created" })
+      res.status(500).json({ error: "Company not created" })
     }
   } catch (error) {
     next(error);
@@ -77,7 +77,7 @@ techCompaniesRouter.delete("/:id", async (req: Request, res: Response, next: Nex
     FROM tech_companies
     WHERE id=${id}
     `)
-    res.json({ message: "Companie delete" })
+    res.json({ message: "Company delete" })
     const response = { data: raws }
 
     res.json(response);
@@ -109,7 +109,7 @@ techCompaniesRouter.put("/:id", async (req: Request, res: Response, next: NextFu
       const response = { data: raws }
       res.json(response)
     } else {
-      res.status(404).json({ error: "Companie not found" })
+      res.status(404).json({ error: "Company not found" })
     }
   } catch (error) {
     next(error);
