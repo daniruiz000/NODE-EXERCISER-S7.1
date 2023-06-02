@@ -1,18 +1,18 @@
-import { techCompaniesRouter } from "./routes/techCompaniesRouter.routes";
-import { studentRouter } from "./routes/student.routes";
-import { courseRouter } from "./routes/course.routes";
-
-import { AppDataSource } from "./databases/typeorm-datasource";
+import express from "express";
+import cors from "cors";
 
 import {
   type Request,
   type Response,
 } from "express";
 
-import express from "express";
-import cors from "cors";
+import { techCompaniesRouter } from "./routes/techCompaniesRouter.routes";
+import { studentRouter } from "./routes/student.routes";
+import { courseRouter } from "./routes/course.routes";
 
+import { AppDataSource } from "./databases/typeorm-datasource";
 import { sqlConnect } from "./databases/sql-db"
+
 import { infoReq } from "./middlewares/infoReq.middleware";
 import { checkError } from "./middlewares/error.middleware";
 
