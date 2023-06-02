@@ -1,4 +1,8 @@
 import { techCompaniesRouter } from "./routes/techCompaniesRouter.routes";
+import { studentRouter } from "./routes/student.routes";
+import { courseRouter } from "./routes/course.routes";
+
+import { AppDataSource } from "./databases/typeorm-datasource";
 
 import {
   type Request,
@@ -15,7 +19,7 @@ import { sqlConnect } from "./databases/sql-db"
 const main = async (): Promise<void> => {
   // Conexión a la BBDD
   const sqlDatabase = await sqlConnect();
-
+  const dataSource = await AppDataSource.initialize()
   // Configuración del server
   const PORT = 3000;
   const app = express();
@@ -31,6 +35,7 @@ const main = async (): Promise<void> => {
   const router = express.Router();
   router.get("/", (req: Request, res: Response) => {
     res.send(`<h3>Esta es la home de nuestra API.</h3>
+    <p> Estamos utilizando la BBDD TypeORM de ${dataSource.options.database as string} del host ${sqlDatabase?.config?.host as string}.</p>
     <p> Estamos utilizando la BBDD SQL de ${sqlDatabase?.config?.database as string} del host ${sqlDatabase?.config?.host as string}.</p>`);
   });
   router.get("*", (req: Request, res: Response) => {
@@ -45,6 +50,8 @@ const main = async (): Promise<void> => {
   });
 
   // Usamos las rutas
+  app.use("/student", studentRouter);
+  app.use("/course", courseRouter);
   app.use("/tech", techCompaniesRouter);
   app.use("/", router);
 
@@ -60,8 +67,10 @@ const main = async (): Promise<void> => {
 
     if (err?.name === "ValidationError") {
       res.status(400).json(err);
-    } else if (errorAsAny?.indexOf("duplicate key") !== -1) {
+    } else if (errorAsAny.errmsg && errorAsAny.errmsg?.indexOf("duplicate key") !== -1) {
       res.status(400).json({ error: errorAsAny.errmsg });
+    } else if (errorAsAny?.code === "ER_NO_DEFAULT_FOR_FIELD") {
+      res.status(400).json({ error: errorAsAny?.sqlMessage })
     } else {
       res.status(500).json(err);
     }

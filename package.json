@@ -6,8 +6,9 @@
   "scripts": {
     "lint": "eslint .",
     "start:pro": "npm run build && node ./dist/index.js",
-    "start": "ts-node-dev ./src/index.ts",
+    "start": "ts-node-dev --inspect -- ./src/index.ts",
     "seed:techCompanies": "ts-node ./src/seeds/techCompanies.seed.ts",
+    "seed:course-and-students": "ts-node ./src/seeds/courseAndStudents.seed.ts",
     "build": "tsc",
     "lint:fix": "eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -37,6 +38,8 @@
     "mongoose": "^7.2.1",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.3.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.16",
     "validator": "^13.9.0"
   },
   "devDependencies": {
