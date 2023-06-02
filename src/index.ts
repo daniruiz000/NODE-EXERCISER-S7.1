@@ -7,14 +7,14 @@ import { AppDataSource } from "./databases/typeorm-datasource";
 import {
   type Request,
   type Response,
-  type NextFunction,
-  type ErrorRequestHandler
 } from "express";
 
 import express from "express";
 import cors from "cors";
 
 import { sqlConnect } from "./databases/sql-db"
+import { infoReq } from "./middlewares/infoReq.middleware";
+import { checkError } from "./middlewares/error.middleware";
 
 const main = async (): Promise<void> => {
   // Conexión a la BBDD
@@ -42,12 +42,8 @@ const main = async (): Promise<void> => {
     res.status(404).send("Lo sentimos :( No hemos encontrado la página solicitada.");
   });
 
-  // Middlewares de aplicación, por ejemplo middleware de logs en consola
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    const date = new Date();
-    console.log(`Petición de tipo ${req.method} a la url ${req.originalUrl} el ${date.toString()}`);
-    next();
-  });
+  // Middleware previo de Info de la req.
+  app.use(infoReq);
 
   // Usamos las rutas
   app.use("/student", studentRouter);
@@ -55,26 +51,8 @@ const main = async (): Promise<void> => {
   app.use("/tech", techCompaniesRouter);
   app.use("/", router);
 
-  // Middleware de gestión de errores
-  app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
-    console.log("*** INICIO DE ERROR ***");
-    console.log(`PETICIÓN FALLIDA: ${req.method} a la url ${req.originalUrl}`);
-    console.log(err);
-    console.log("*** FIN DE ERROR ***");
-
-    // Truco para quitar el tipo a una variable:
-    const errorAsAny: any = err as unknown as any
-
-    if (err?.name === "ValidationError") {
-      res.status(400).json(err);
-    } else if (errorAsAny.errmsg && errorAsAny.errmsg?.indexOf("duplicate key") !== -1) {
-      res.status(400).json({ error: errorAsAny.errmsg });
-    } else if (errorAsAny?.code === "ER_NO_DEFAULT_FOR_FIELD") {
-      res.status(400).json({ error: errorAsAny?.sqlMessage })
-    } else {
-      res.status(500).json(err);
-    }
-  });
+  // Middleware de gestión de los Errores.
+  app.use(checkError);
 
   app.listen(PORT, () => {
     console.log(`Server levantado en el puerto ${PORT}`);
